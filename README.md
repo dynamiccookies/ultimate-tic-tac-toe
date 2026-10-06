@@ -43,7 +43,7 @@ Hard difficulty uses bounded heuristic lookahead. It is not an unbeatable solver
 
 Make three of your marks in a row, column, or diagonal to win. If the board fills without a winner, the game is a draw.
 
-### Ultimate Tic Tac Toe
+### Ultimate rules
 
 - X starts and can choose any square.
 - Your square sends the next player to the matching small board. For example, the top-right square sends them to the top-right board.
@@ -81,7 +81,7 @@ GitHub stores the source code. Deploy the game to a PHP-capable web host to play
 |---|---|
 | Setup and controls | [How it works](#how-it-works) |
 | Regular game rules | [Regular Tic Tac Toe](#regular-tic-tac-toe) |
-| Ultimate game rules | [Ultimate Tic Tac Toe](#ultimate-tic-tac-toe) |
+| Ultimate game rules | [Ultimate rules](#ultimate-rules) |
 | Installation | [Installation](#installation) |
 | Hosting requirements | [Requirements](#requirements) |
 | Saved progress and data | [Permissions and privacy](#permissions-and-privacy) |
