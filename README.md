@@ -1,21 +1,122 @@
-# Ultimate Tic Tac Toe — v1.2.0
+# 🎮 Ultimate Tic Tac Toe
 
-Upload index.php into a folder on your PHP website and open that folder in your browser. Requires PHP 8.0+ with sessions enabled and a modern browser. No database, Composer, external assets, or configuration required.
+![Version](https://img.shields.io/badge/version-1.2.0-blue?style=for-the-badge)
+![PHP](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)
+[![GitHub Issues](https://img.shields.io/github/issues/dynamiccookies/ultimate-tic-tac-toe?style=for-the-badge)](https://github.com/dynamiccookies/ultimate-tic-tac-toe/issues)
 
-Example: upload to /ultimate/ and visit https://your-domain.com/ultimate/.
+Play Regular or Ultimate Tic Tac Toe against the computer or with another player on the same screen.
 
-Features: Regular and Ultimate Tic Tac Toe, result and instructions popups, draw-board count, viewport-sized desktop board, computer opponent (Easy, Normal, Hard), local two-player mode, choice of X/O, dark/light theme, legal-board highlighting, board ownership and draw indicators, undo a full turn, confirmed new game, automatic session saves and refresh recovery. Hard uses bounded heuristic lookahead; it is not an unbeatable solver.
+**Regular mode** uses one board. **Ultimate mode** uses nine connected boards, where each move determines the board your opponent plays next.
 
-Rules: a played square directs the opponent to its matching board. Won/full boards close; a closed target gives free choice among open boards. Three owned boards in a row wins. Drawn boards do not count toward a winning line. A fully closed big board without a winning line is a draw.
+> [!IMPORTANT]
+> This game requires PHP hosting with sessions enabled. GitHub Pages cannot run PHP. Game setup changes take effect when you click **New game**. Progress saves automatically and restores when you reopen the same game URL in the same browser.
 
-Gameplay and computer search run in browser JavaScript. PHP isolates saves per browser session, checks CSRF tokens and validates the move log before saving. This is a casual game, not a competitive anti-cheat service. Two-player mode shares a screen; it does not support remote multiplayer. Browser sessions are independent; this game does not use accounts. Progress is also saved immediately in browser local storage and restored automatically when the page opens, including after a server session expires. Clearing browser storage removes this recovery copy. Saves are specific to this browser and game URL.
+## Key features
 
-Changing settings takes effect when New game is clicked. Undo reverses your last turn and the computer reply. X always begins. Dark/light preference is saved in browser storage.
+- Selectable **Regular** and **Ultimate** game types
+- Computer opponent with **Easy**, **Normal**, and **Hard** difficulty
+- Local two-player mode on the same screen
+- Choice of X or O, with X always playing first
+- Dark and light themes with saved preference
+- Highlighted playable boards and the most recent move
+- X, O, and drawn-board counters
+- Undo for a full turn, including the computer reply
+- Confirmed new game when a game is still in progress
+- Win, loss, and draw popups
+- Confetti celebrations that honor reduced-motion preferences
+- Instructions in a popup that keeps the main layout compact
+- Viewport-sized desktop board
+- Automatic PHP session saves and immediate browser recovery
 
-Version 1.1.0 adds confetti for human/local-player wins, a computer-win loss message, a draw banner, and highlighted winning boards. Celebrations honor reduced-motion preferences. Replace index.php to upgrade; existing session saves remain compatible.
+Hard difficulty uses bounded heuristic lookahead. It is not an unbeatable solver. Small screens may still require scrolling to keep the controls usable.
 
-Version 1.1.1 removes the database footer comment and improves light-mode grid contrast. Gameplay and AI are unchanged.
+## How it works
 
-Version 1.1.2 highlights playable boards in light mode with a green outline, green grid, and pale-green cells. Dark mode is unchanged.
+1. Select **Regular Tic Tac Toe** or **Ultimate Tic Tac Toe**.
+2. Choose the play mode, computer difficulty, and your mark.
+3. Click **New game** to apply the selected setup.
+4. Play in the highlighted board or choose an empty square in Regular mode.
+5. Use **Undo turn** to reverse your last turn and the computer reply.
+6. When the game ends, view the result popup or start a rematch.
 
-Version 1.2.0 adds a Regular/Ultimate game selector, win/loss/draw and How to Play dialogs, a draw-board counter, a compact desktop layout, immediate browser recovery, and clearer automatic-save messages. Small screens may still require scrolling to keep controls usable.
+### Regular Tic Tac Toe
+
+Make three of your marks in a row, column, or diagonal to win. If the board fills without a winner, the game is a draw.
+
+### Ultimate Tic Tac Toe
+
+- X starts and can choose any square.
+- Your square sends the next player to the matching small board. For example, the top-right square sends them to the top-right board.
+- Three marks in a row win a small board. Won and drawn boards close.
+- If a move sends you to a closed board, you may choose any open board.
+- Win three small boards in a row, column, or diagonal to win the game.
+- Drawn boards do not count toward a winning line.
+- If all small boards close without a winner, the game is a draw.
+
+## Installation
+
+The game uses one application file:
+
+- `index.php`
+
+1. Download `index.php` from this repository.
+2. Create a folder on your PHP website, such as `/ultimate/`.
+3. Upload `index.php` into that folder.
+4. Open the folder URL in your browser, such as `https://your-domain.com/ultimate/`.
+
+No database, Composer packages, external game assets, API keys, or configuration files are required.
+
+## Requirements
+
+- PHP **8.0 or newer**
+- PHP sessions enabled and writable session storage
+- A modern browser with JavaScript enabled
+- Browser local storage for theme persistence and browser progress recovery
+
+GitHub stores the source code. Deploy the game to a PHP-capable web host to play it.
+
+## Documentation
+
+| Topic | Documentation |
+|---|---|
+| Setup and controls | [How it works](#how-it-works) |
+| Regular game rules | [Regular Tic Tac Toe](#regular-tic-tac-toe) |
+| Ultimate game rules | [Ultimate Tic Tac Toe](#ultimate-tic-tac-toe) |
+| Installation | [Installation](#installation) |
+| Hosting requirements | [Requirements](#requirements) |
+| Saved progress and data | [Permissions and privacy](#permissions-and-privacy) |
+| Updates and version history | [Updates](#updates) |
+| Reporting problems | [Releases and support](#releases-and-support) |
+
+## Permissions and privacy
+
+The game does not require an account. Gameplay and computer search run in browser JavaScript.
+
+PHP stores the move log and game settings in the browser's server session. Save requests use CSRF tokens, and PHP validates the move sequence before saving. This is a casual game, not a competitive anti-cheat service.
+
+Progress is also saved immediately in browser local storage and restored automatically when the page opens, including after a server session expires. Clearing browser storage removes that recovery copy. Progress is specific to the browser and game URL; it does not sync across devices.
+
+Dark and light theme preferences are stored in the browser. Two-player mode shares one screen and does not support remote multiplayer.
+
+## Updates
+
+Replace the hosted `index.php` with the updated file, then reload the game. Existing Ultimate session saves remain compatible with version 1.2.0.
+
+| Version | Changes |
+|---|---|
+| **1.2.0** | Regular/Ultimate selector, result and instructions popups, draw-board counter, compact desktop layout, immediate browser recovery, and clearer save messages |
+| **1.1.2** | Green outlines, green grids, and pale-green cells for playable boards in light mode |
+| **1.1.1** | Improved light-mode grid contrast and removed the database footer comment |
+| **1.1.0** | Win celebrations, computer-win message, draw banner, and highlighted winning boards |
+
+## Releases and support
+
+- [View the source and download files](https://github.com/dynamiccookies/ultimate-tic-tac-toe)
+- [Review commit history](https://github.com/dynamiccookies/ultimate-tic-tac-toe/commits/main/)
+- [Report a problem or request a feature](https://github.com/dynamiccookies/ultimate-tic-tac-toe/issues)
+
+For bug reports, include the game type, play mode, difficulty, browser, and steps needed to reproduce the problem.
+
+## Contributing
+
+Issues and pull requests are welcome. Review the existing issues before submitting a duplicate request.
