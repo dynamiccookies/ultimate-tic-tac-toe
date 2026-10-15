@@ -1,10 +1,10 @@
 # 🎮 Ultimate Tic Tac Toe
 
-![Version](https://img.shields.io/badge/version-1.2.0-blue?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.3.0-blue?style=for-the-badge)
 ![PHP](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=for-the-badge&logo=php&logoColor=white)
 [![GitHub Issues](https://img.shields.io/github/issues/dynamiccookies/ultimate-tic-tac-toe?style=for-the-badge)](https://github.com/dynamiccookies/ultimate-tic-tac-toe/issues)
 
-Play Regular or Ultimate Tic Tac Toe against the computer or with another player on the same screen.
+Play Regular or Ultimate Tic Tac Toe against the computer or with another player locally or online.
 
 **Regular mode** uses one board. **Ultimate mode** uses nine connected boards, where each move determines the board your opponent plays next.
 
@@ -16,6 +16,8 @@ Play Regular or Ultimate Tic Tac Toe against the computer or with another player
 - Selectable **Regular** and **Ultimate** game types
 - Computer opponent with **Easy**, **Normal**, and **Hard** difficulty
 - Local two-player mode on the same screen
+- Online two-player rooms with eight-character host/join codes
+- Server-validated online turns, refresh recovery, connection status, and mutual rematch approval
 - Choice of X or O, with X always playing first
 - Dark and light themes with saved preference
 - Highlighted playable boards and the most recent move
@@ -38,6 +40,19 @@ Hard difficulty uses bounded heuristic lookahead. It is not an unbeatable solver
 4. Play in the highlighted board or choose an empty square in Regular mode.
 5. Use **Undo turn** to reverse your last turn and the computer reply.
 6. When the game ends, view the result popup or start a rematch.
+
+### Online play
+
+1. Both players open the same hosted game URL on their own devices.
+2. Select **Online play** under Play mode.
+3. The host selects Regular or Ultimate and clicks **Host a game**.
+4. Share the eight-character code with the other player. The host plays X.
+5. The other player clicks **Join a game**, enters the code, and plays O.
+6. X moves first. Turns synchronize automatically, usually within about one or two seconds.
+
+Refresh the page in the same browser session to resume your seat. The connection indicator shows whether the opponent has checked in within the last 15 seconds. A backgrounded phone may appear away until its browser resumes.
+
+After a finished game, either player can request a rematch; both must approve before the board resets. Undo is unavailable online. Leaving closes the room for both players. Rooms expire after 24 hours without activity and can also disappear when the host clears temporary storage. Room codes admit one guest, so share them only with your intended opponent.
 
 ### Regular Tic Tac Toe
 
@@ -70,6 +85,8 @@ No database, Composer packages, external game assets, API keys, or configuration
 
 - PHP **8.0 or newer**
 - PHP sessions enabled and writable session storage
+- Writable PHP temporary storage for online rooms (created automatically outside the web root)
+- A single PHP server or shared temporary storage across workers; independent servers need shared room storage
 - A modern browser with JavaScript enabled
 - Browser local storage for theme persistence and browser progress recovery
 
@@ -79,6 +96,7 @@ GitHub stores the source code. Deploy the game to a PHP-capable web host to play
 
 | Topic | Documentation |
 |---|---|
+| Online multiplayer | [Online play](#online-play) |
 | Setup and controls | [How it works](#how-it-works) |
 | Regular game rules | [Regular Tic Tac Toe](#regular-tic-tac-toe) |
 | Ultimate game rules | [Ultimate rules](#ultimate-rules) |
@@ -96,14 +114,17 @@ PHP stores the move log and game settings in the browser's server session. Save 
 
 Progress is also saved immediately in browser local storage and restored automatically when the page opens, including after a server session expires. Clearing browser storage removes that recovery copy. Progress is specific to the browser and game URL; it does not sync across devices.
 
-Dark and light theme preferences are stored in the browser. Two-player mode shares one screen and does not support remote multiplayer.
+Dark and light theme preferences are stored in the browser. Local two-player mode shares one screen. Online play uses private room files in PHP temporary storage and polls the server approximately every 1.2 seconds. Room files contain random session player identifiers, moves, game type, timestamps, and rematch state. These files are separate from local browser recovery; online moves are authoritative on the server. They expire after 24 hours without activity, with expired files cleaned up opportunistically.
+
+The room code lets the first guest join; once both seats are occupied, another session cannot take either seat. Returning to a seat requires the original browser session. Clearing cookies or losing the session can prevent resuming that seat. No external matchmaking service or accounts are required.
 
 ## Updates
 
-Replace the hosted `index.php` with the updated file, then reload the game. Existing Ultimate session saves remain compatible with version 1.2.0.
+Replace the hosted `index.php` with the updated file, then reload the game. Existing Ultimate session saves remain compatible with version 1.3.0.
 
 | Version | Changes |
 |---|---|
+| **1.3.0** | Online host/join rooms for both game types, validated turns, connection status, refresh recovery, and mutual rematches |
 | **1.2.0** | Regular/Ultimate selector, result and instructions popups, draw-board counter, compact desktop layout, immediate browser recovery, and clearer save messages |
 | **1.1.2** | Green outlines, green grids, and pale-green cells for playable boards in light mode |
 | **1.1.1** | Improved light-mode grid contrast and removed the database footer comment |
